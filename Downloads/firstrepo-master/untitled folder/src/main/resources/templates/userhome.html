@@ -1,0 +1,275 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta charset="utf-8" />
+<title>User Home</title>
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	
+	<script>
+$(document).ready(function(){
+    $(".i1").click(function(){
+        alert("Your File is Successfully Added!");
+    });
+});
+</script>
+
+<style type="text/css">
+body
+{
+	font:15px/1.5 Arial,Helvetica,sans-serif;
+	padding:0;
+	margin:0;
+	background-color:#f4f4f4;
+}
+
+
+.li
+{
+  float:right;
+   display: flex;
+   flex-direction: row;
+   /* Below sets up your display method: flex-start|flex-end|space-between|space-around */
+   justify-content: flex-start; 
+   /* Below removes bullets and cleans white-space */
+   list-style: none;
+   padding: 0;
+   /* Bonus: forces no word-wrap */
+   white-space: nowrap;
+ 
+}
+li{
+ padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 10px;
+   padding-right: 101px;
+   
+
+}
+header{
+
+	background:#0a2d71;
+	color:#ffffff;
+	padding-top:30px;
+	min-height:70px;
+	border-bottom:#e8491d 3px solid;
+
+
+}
+header a{
+	color:#ffffff;
+	text-decoration:none;
+	text-transform:uppercase;
+	font-size:16px;
+
+
+
+}
+header #branding
+{
+	float:left;
+
+}
+header #branding hi{margin:0;}
+header nav{
+
+float:right;
+}
+
+header .highlight, header .current a
+{
+	color:#e8491d;
+	font-weight:bold;
+
+}
+
+header a:hover
+{
+	color:#cccccc;
+	font-weight:bold;
+}
+
+.list
+{
+   
+	
+
+}
+.container
+{
+	width:80%;
+	margin:auto;
+	overflow:hidden;
+
+
+}	
+
+
+.main
+{
+background-color: #f2e775;
+
+color: #0a2e71;
+margin-left:650px;
+
+
+width:500px;
+
+margin-top:10px;
+padding-bottom:10px;
+padding-top:10px;
+padding-right:10px;
+padding-left:10px;
+
+}
+.h2-sign
+{
+padding-left: 175px;
+font-size:40px;
+}
+h3
+{
+
+}
+.h3-name
+{
+padding-left:140px;
+font-size:30px;
+}
+.h3-password
+{
+padding-left:145px;
+font-size:30px;
+}
+.first-input
+{
+width:98.5%;
+}
+input
+{
+width:98.5%;
+height:35px;
+font-size:25px;
+}
+.submit1
+{
+width:100%;
+color:red;
+
+
+	
+
+}
+.h2-sign
+{
+padding-left: 175px;
+font-size:40px;
+}
+.h3-login
+{
+padding-left:140px;
+font-size:30px;
+}
+.h3-login1
+{
+padding-left:140px;
+font-size:30px;
+}
+.h2-login
+{
+padding-left: 175px;
+font-size:40px;
+}
+.a1
+{
+color: #da3030		;
+font-size:50px;
+}
+
+
+</style>
+
+
+</head>
+<body>
+<header>
+
+<div class="container">
+<div id="branding">
+
+<h2><span class="highlight">File </span>Management Software</h2>
+</div>
+
+
+<nav>
+
+<ul class="li" >
+<li ><a th:href="home">Home</a></li>
+
+</ul>
+</nav>
+</div>
+</header>
+
+<br><br>
+
+<br><br><br><br>
+
+
+
+
+<h1> You are Logged in</h1>
+
+<a th:text="${message}" class="a1"  ></a>
+<form action="/upload" method="post" enctype="multipart/form-data">
+<input type="file" name="files" multiple/>
+<input class="i1" type="submit" value="Upload Files"/>
+
+</form>
+	<div class="container h-100">
+		<div class="row h-100 justify-content-center align-items-center">
+			<div class="col-md-7 table-responsive">
+				<h2>Your Uploaded Files</h2>
+				<table id="customerTable" class="table">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Filename</th>
+							<th>Download</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="files, rowStat: ${file}">
+					        <td th:text="${rowStat.count}">1</td>
+							<td th:text="${files.filename}">File-Name</td>
+					        <td><a th:href="${files.url}">Link</a></td>
+					    </tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
+	</div>
+
+<form th:action="@{/addfilestouser}" method="post" >
+<h3>User ID</h3>
+<input type="text" name="aid">
+
+<h3>Username</h3>
+<input type="text" name="aname">
+<h3>Filename</h3>
+<input type="text" name="filename">
+
+
+<input type="submit" value="Share Files "/>
+
+</form>
+
+</body>
+</html>
