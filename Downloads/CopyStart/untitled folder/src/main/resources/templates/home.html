@@ -1,0 +1,253 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("input").focus(function(){
+        $(this).css("background-color", "#D5FCA3");
+    });
+    $("input").blur(function(){
+        $(this).css("background-color", "#D5FCA3");
+    });
+});
+</script>
+<style type="text/css">
+body
+{
+	font:15px/1.5 Arial,Helvetica,sans-serif;
+	padding:0;
+	margin:0;
+	background-color:#f4f4f4;
+}
+
+
+.li
+{
+  float:right;
+   display: flex;
+   flex-direction: row;
+   /* Below sets up your display method: flex-start|flex-end|space-between|space-around */
+   justify-content: flex-start; 
+   /* Below removes bullets and cleans white-space */
+   list-style: none;
+   padding: 0;
+   /* Bonus: forces no word-wrap */
+   white-space: nowrap;
+ 
+}
+li{
+ padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 10px;
+   padding-right: 101px;
+   
+
+}
+header{
+
+	background:#0a2d71;
+	color:#ffffff;
+	padding-top:30px;
+	min-height:70px;
+	border-bottom:#e8491d 3px solid;
+
+
+}
+header a{
+	color:#ffffff;
+	text-decoration:none;
+	text-transform:uppercase;
+	font-size:16px;
+
+
+
+}
+header #branding
+{
+	float:left;
+
+}
+header #branding hi{margin:0;}
+header nav{
+
+float:right;
+}
+
+header .highlight, header .current a
+{
+	color:#e8491d;
+	font-weight:bold;
+
+}
+
+header a:hover
+{
+	color:#cccccc;
+	font-weight:bold;
+}
+
+.list
+{
+   
+	
+
+}
+.container
+{
+	width:80%;
+	margin:auto;
+	overflow:hidden;
+
+
+}	
+
+
+.main
+{
+background-color: #f2e775;
+
+color: #0a2e71;
+margin-left:650px;
+
+
+width:500px;
+
+margin-top:10px;
+padding-bottom:10px;
+padding-top:10px;
+padding-right:10px;
+padding-left:10px;
+
+}
+.h2-sign
+{
+padding-left: 175px;
+font-size:40px;
+}
+h3
+{
+
+}
+.h3-name
+{
+padding-left:140px;
+font-size:30px;
+}
+.h3-password
+{
+padding-left:145px;
+font-size:30px;
+}
+.first-input
+{
+width:98.5%;
+}
+input
+{
+width:98.5%;
+height:35px;
+font-size:25px;
+}
+.submit1
+{
+width:100%;
+color:red;
+
+
+	
+
+}
+.h2-sign
+{
+padding-left: 175px;
+font-size:40px;
+}
+.h3-login
+{
+padding-left:140px;
+font-size:30px;
+}
+.h3-login1
+{
+padding-left:140px;
+font-size:30px;
+}
+.h2-login
+{
+padding-left: 175px;
+font-size:40px;
+}
+
+
+</style>
+</head>
+<body>
+<header>
+
+<div class="container">
+<div id="branding">
+
+<h2><span class="highlight">File </span>Management Software</h2>
+</div>
+
+
+<nav>
+
+<ul class="li" >
+<li ><a th:href="home">Home</a></li>
+
+</ul>
+</nav>
+</div>
+</header>
+
+<br><br>
+
+
+
+
+
+
+
+
+<div class="main">
+
+<form th:action="@{/addAlien}" >
+<h2 class="h2-sign">Sign Up </h2>
+
+
+<h3 class="h3-name">Enter Username</h3><input class="first-input" type="text"  name= aname><br>
+
+
+<h3 class="h3-password">Enter Password</h3><input class="i2 " type="password"  name=password><br>
+
+<input class="submit1"type="submit" value="Submit"><br>
+
+
+
+
+</form>
+
+<form th:action="@{/login}" method="post">
+<h2 class="h2-login"> Log In</h2>
+
+
+<h3 class="h3-login">Enter Username</h3><input type="text"  name= aname  ><br>
+<h3   class="h3-login1">Enter Password</h3><input type="password"  name=password><br>
+<input class="submit1" type="submit" value="Submit"><br>
+
+
+</form>
+
+
+</div>
+
+
+
+
+</body>
+</html>

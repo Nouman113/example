@@ -1,0 +1,165 @@
+body
+{
+	font:15px/1.5 Arial,Helvetica,sans-serif;
+	padding:0;
+	margin:0;
+	background-color:#f4f4f4;
+}
+
+
+.li
+{
+  float:right;
+   display: flex;
+   flex-direction: row;
+   /* Below sets up your display method: flex-start|flex-end|space-between|space-around */
+   justify-content: flex-start; 
+   /* Below removes bullets and cleans white-space */
+   list-style: none;
+   padding: 0;
+   /* Bonus: forces no word-wrap */
+   white-space: nowrap;
+ 
+}
+li{
+ padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 10px;
+   padding-right: 101px;
+   
+
+}
+header{
+
+	background:#0a2d71;
+	color:#ffffff;
+	padding-top:30px;
+	min-height:70px;
+	border-bottom:#e8491d 3px solid;
+
+
+}
+header a{
+	color:#ffffff;
+	text-decoration:none;
+	text-transform:uppercase;
+	font-size:16px;
+
+
+
+}
+header #branding
+{
+	float:left;
+
+}
+header #branding hi{margin:0;}
+header nav{
+
+float:right;
+}
+
+header .highlight, header .current a
+{
+	color:#e8491d;
+	font-weight:bold;
+
+}
+
+header a:hover
+{
+	color:#cccccc;
+	font-weight:bold;
+}
+
+.list
+{
+   
+	
+
+}
+.container
+{
+	width:80%;
+	margin:auto;
+	overflow:hidden;
+
+
+}	
+
+
+.main
+{
+background-color: #f2e775;
+
+color: #0a2e71;
+margin-left:650px;
+
+
+width:500px;
+
+margin-top:10px;
+padding-bottom:10px;
+padding-top:10px;
+padding-right:10px;
+padding-left:10px;
+
+}
+.h2-sign
+{
+padding-left: 175px;
+font-size:40px;
+}
+h3
+{
+
+}
+.h3-name
+{
+padding-left:140px;
+font-size:30px;
+}
+.h3-password
+{
+padding-left:145px;
+font-size:30px;
+}
+.first-input
+{
+width:98.5%;
+}
+input
+{
+width:98.5%;
+height:35px;
+font-size:25px;
+}
+.submit1
+{
+width:100%;
+color:red;
+
+
+	
+
+}
+.h2-sign
+{
+padding-left: 175px;
+font-size:40px;
+}
+.h3-login
+{
+padding-left:140px;
+font-size:30px;
+}
+.h3-login1
+{
+padding-left:140px;
+font-size:30px;
+}
+.h2-login
+{
+padding-left: 175px;
+font-size:40px;
+}
