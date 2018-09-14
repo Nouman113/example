@@ -232,26 +232,32 @@ public class AlienController {
 	@GetMapping("/files")
      public String DownloadFile(Model model)
      {
-		for(FileInfo f:userFiles)
-		{
-		List<FileInfo> fileInfos = fileStorage.loadFiles().map(
+		
+	List<FileInfo> fileInfos = userFiles.stream().map(
 				path ->	{
-					
-					
-					
-					
-					String filename = f.getFilename().toString();
-					String url = MvcUriComponentsBuilder.fromMethodName(AlienController.class,
-	                        "downloadFile", f.getUrl().toString()).build().toString();
-					
+					String filename="b ";
+					String url="b ";
+					for(FileInfo f:userFiles)
+					{
+						if(f.getFilename()==path.getFilename().toString())
+						{
+					     filename = path.getFilename().toString();
+					         url = MvcUriComponentsBuilder.fromMethodName(AlienController.class,
+	                        "downloadFile", path.getFilename().toString()).build().toString();
+					}
+						else
+						{
+							filename="a ";
+							 url=" a";
+						}}
 					return new FileInfo(filename, url); 
 				}
 					
 			)
 			.collect(Collectors.toList());
-		}
+		
 	
-	model.addAttribute("file", userFiles);
+	model.addAttribute("file", fileInfos);
 		/*for(FileInfo f:userFiles) {
 		String url = MvcUriComponentsBuilder.fromMethodName(AlienController.class,
                 "downloadFile", f.getFilename().toString()).build().toString();

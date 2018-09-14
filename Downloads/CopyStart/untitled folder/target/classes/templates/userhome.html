@@ -241,7 +241,7 @@ font-size:50px;
 						<tr>
 							<th>No</th>
 							<th>Filename</th>
-							<th>Download</th>
+							<th>Link</th>
 							<th>User Name</th>
 						</tr>
 					</thead>
@@ -249,8 +249,8 @@ font-size:50px;
 						<tr th:each="files, rowStat: ${file}">
 					        <td th:text="${rowStat.count}">1</td>
 							<td th:text="${files.filename}">File-Name</td>
-					        <td><a th:href="${files.url}" >Link</a></td>
-					        <td th:text="${files.alien.aname}">User Name</td>
+							<td th:href="${files.url}">Link</td>
+				            <td th:text="${files.alien.aname}">User Name</td>
 					    </tr>
 					</tbody>
 				</table>

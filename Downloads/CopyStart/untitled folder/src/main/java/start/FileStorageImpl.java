@@ -29,21 +29,7 @@ public class FileStorageImpl {
 	 Path rootLocation=Paths.get("uploads");
 
 		
-		public  void location()
-		{
-			for(int i=1;i<=10;i++)
-			{
-			if (cont.userLogedInID==i)
-			{
-				byte[] array = new byte[7]; // length is bounded by 7
-			    new Random().nextBytes(array);
-			    String generatedString = new String(array, Charset.forName("UTF-8"));
-			    
-			    System.out.println(generatedString);
-			   rootLocation=Paths.get(generatedString);
-			    
-			}}
-		}
+		
 
 	public void store(MultipartFile file){
 		try {
