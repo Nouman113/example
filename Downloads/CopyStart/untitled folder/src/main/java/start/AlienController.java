@@ -1,14 +1,17 @@
 package start;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.attoparser.config.ParseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -40,13 +43,17 @@ public class AlienController {
 	List<FileInfo> list = new ArrayList<>();
 	List<FileInfo> savedFiles;
 	List<FileInfo> fileInfos;
+	List<FileInfo> listfile;
 	List<FileInfo> listfiles;
 	List<FileInfo> userFiles;
+	//Alien myobj;
 	@Autowired
 	AlienRepo repo;
 
 	@Autowired
 	FileRepo filerepo;
+	//@Autowired
+	//ShareFiles share;
 
 	public static String uploadDirectory = System.getProperty("user.dir") + "/uploads";
 
@@ -107,20 +114,44 @@ public class AlienController {
 	@RequestMapping("/addfilestouser")
 	public String filesToOtherUser(@RequestParam String aname ,@RequestParam int aid,@RequestParam String filename,Model model)
 	{
-		
 		FileInfo fi=filerepo.findByFilename(filename);
 		
+	    //String url= fi.getUrl();
+            //  share=new ShareFiles(userLogedInID,aid,url); 
 		
-		if(repo.existsByAidAndAname(aid, aname))
+		//List<File> files = ...;
+		
+	
+		
+		
+		Alien a=repo.findByAid(aid); 
+	     
+		if(repo.existsByAidAndAname(aid, aname) && filerepo.existsByFilename(filename))
 		{
-		Alien a= repo.findByAid(aid);
-		fi.setAlien(a);
-		filerepo.save(fi);
+	   // a= repo.findByAid(aid);
+		//fi.setAlien(a);
 		
+		//filerepo.save(fi);
+		       File file=new File(fi.getUrl(),fi.getFilename());
+			    try {	
+					Files.copy(
+					    (new File(fi.getUrl() + fi.getFilename())).toPath(),file.toPath(),
+					    StandardCopyOption.REPLACE_EXISTING);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    FileInfo fo=new FileInfo(file.getName(),file.getPath());
+			    fo.setAlien(a);
+			    filerepo.save(fo);
+			
 		model.addAttribute("msg", "Successfully Shared With Desired User");	
 		
 		}
-		
+		else
+		{
+			model.addAttribute("msg","User Or File Name is Not Correct");
+		}		
          return "message1"; 
 		
 		}
@@ -147,7 +178,7 @@ public class AlienController {
 	public String upload(Model model, @RequestParam("files") MultipartFile[] files) {
 		StringBuilder filenames = new StringBuilder();
 
-		Alien myobj = repo.findByAid(userLogedInID);
+		Alien  myobj = repo.findByAid(userLogedInID);
 		
 		
 
@@ -185,7 +216,7 @@ public class AlienController {
 		
 		  userFiles = filerepo.findFilesByAlien(myobj); 
 		
-
+//userFiles.add(e);
 		 model.addAttribute("file",userFiles);
 
 		return "userhome";
@@ -239,7 +270,7 @@ public class AlienController {
 					String url="b ";
 					for(FileInfo f:userFiles)
 					{
-						if(f.getFilename()==path.getFilename().toString())
+						if(repo.existsByAid(userLogedInID))
 						{
 					     filename = path.getFilename().toString();
 					         url = MvcUriComponentsBuilder.fromMethodName(AlienController.class,

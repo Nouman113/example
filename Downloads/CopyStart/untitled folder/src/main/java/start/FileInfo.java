@@ -33,6 +33,7 @@ public class FileInfo {
 	public void setAlien(Alien alien) {
 		this.alien = alien;
 	}
+	
 
 	public FileInfo(String filename, String url) {
 		this.filename = filename;

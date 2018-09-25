@@ -18,6 +18,15 @@ $(document).ready(function(){
         alert("Your File is Successfully Added!");
     });
 });
+function checkform(evt)    {        
+    var myForm = document.frmhot;
+    var condition = true;
+    if(myForm.files.value==""){
+        alert("Please select a timeframe status."); 
+        myForm.files.focus();
+        condition = false;
+    }
+
 </script>
 
 <style type="text/css">
@@ -81,6 +90,7 @@ header nav{
 
 float:right;
 }
+
 
 header .highlight, header .current a
 {
@@ -166,6 +176,10 @@ color:red;
 	
 
 }
+.abc{
+font-size:25px;
+}
+
 .h2-sign
 {
 padding-left: 175px;
@@ -226,12 +240,20 @@ font-size:50px;
 
 <h1> You are Logged in</h1>
 
+
 <a th:text="${message}" class="a1"  ></a>
-<form action="/upload" method="post" enctype="multipart/form-data">
+<table class="ce">
+
+<form action="/upload" method="post" enctype="multipart/form-data" onclick="checkForm(evt)">
 <input type="file" name="files" multiple/>
-<input class="i1" type="submit" value="Upload Files"/>
-<a href="/files"  role="button">Download Files</a>
+<br>	
+
+<th><input class="i1" th:validate="true" type="submit" value="Upload Files"/></th>
+
+<th><a class="abc"href="/files"  role="button" > Download Files</a>
+
 </form>
+</table>
 	<div class="container h-100">
 		<div class="row h-100 justify-content-center align-items-center">
 			<div class="col-md-7 table-responsive">
@@ -249,7 +271,7 @@ font-size:50px;
 						<tr th:each="files, rowStat: ${file}">
 					        <td th:text="${rowStat.count}">1</td>
 							<td th:text="${files.filename}">File-Name</td>
-							<td th:href="${files.url}">Link</td>
+							<td th:text="${files.url}">Link</td>
 				            <td th:text="${files.alien.aname}">User Name</td>
 					    </tr>
 					</tbody>

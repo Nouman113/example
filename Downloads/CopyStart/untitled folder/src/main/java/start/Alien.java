@@ -23,9 +23,11 @@ public class Alien {
 	private int aid;
     
 	@Column
+	@NotNull
 	private String aname;
 
 	@Column
+	@NotNull
 	private String password;
 
 	@OneToMany
