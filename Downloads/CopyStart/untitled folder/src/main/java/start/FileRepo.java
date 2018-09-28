@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FileRepo extends CrudRepository<FileInfo,String> {
 
-	FileInfo findByFilename(String filename);
+	List<FileInfo> findByFilename(String filename);
 	Boolean existsByFilename(String filename);
 	List<FileInfo> findFilesByAlien(Alien alien);
 	

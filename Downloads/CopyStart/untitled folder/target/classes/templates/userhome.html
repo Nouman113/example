@@ -30,6 +30,8 @@ function checkform(evt)    {
 </script>
 
 <style type="text/css">
+
+
 body
 {
 	font:15px/1.5 Arial,Helvetica,sans-serif;
@@ -205,6 +207,11 @@ font-size:40px;
 color: #da3030		;
 font-size:50px;
 }
+.label-1
+{
+color:#E22711  ;
+font-size:30px;
+}
 
 
 </style>
@@ -245,7 +252,7 @@ font-size:50px;
 <table class="ce">
 
 <form action="/upload" method="post" enctype="multipart/form-data" onclick="checkForm(evt)">
-<input type="file" name="files" multiple/>
+<input type="file" required name="files" multiple/>
 <br>	
 
 <th><input class="i1" th:validate="true" type="submit" value="Upload Files"/></th>
@@ -280,15 +287,17 @@ font-size:50px;
 			</div>
 		</div>
 	</div>
-
+	<div>
+	<label class="label-1">If You Want To Share Files With Your Friend Give His ID,Name And Filename Which You Want To Share With Him </label>
+</div>
 <form th:action="@{/addfilestouser}" method="post" >
 <h3>User ID</h3>
-<input type="text" name="aid">
+<input type="text" name="aid" required>
 
 <h3>Username</h3>
-<input type="text" name="aname">
+<input type="text" name="aname" required>
 <h3>Filename</h3>
-<input type="text" name="filename">
+<input type="text" name="filename" required >
 
 
 <input type="submit" value="Share Files "/>

@@ -46,14 +46,13 @@ public class AlienController {
 	List<FileInfo> listfile;
 	List<FileInfo> listfiles;
 	List<FileInfo> userFiles;
-	//Alien myobj;
+
 	@Autowired
 	AlienRepo repo;
 
 	@Autowired
 	FileRepo filerepo;
-	//@Autowired
-	//ShareFiles share;
+
 
 	public static String uploadDirectory = System.getProperty("user.dir") + "/uploads";
 
@@ -62,26 +61,26 @@ public class AlienController {
 		return "home";
 	}
 
-	@RequestMapping("/addAlien")
+	@RequestMapping(path="/addAlien",method=RequestMethod.POST)
 	public String addAlien(Alien alien,Model model)
 
 	{
 		if(alien.getAname()!=null)
 		{
 			if(alien.getPassword()!=null)
-		{
-		repo.save(alien);
+			{
+				repo.save(alien);
 
-		Alien obj = repo.findByAnameAndPassword(alien.getAname(), alien.getPassword());
-		userLogedInID = obj.getAid();
-		  model.addAttribute("file",listfiles);
-		
-		return "loginpage";
-        }
+				Alien obj = repo.findByAnameAndPassword(alien.getAname(), alien.getPassword());
+				userLogedInID = obj.getAid();
+				model.addAttribute("file",userFiles);
+
+				return "loginpage";
+			}
 			else 
 				return "message";
-			
-			}
+
+		}
 		else return "message";
 	}
 
@@ -91,18 +90,14 @@ public class AlienController {
 		if (repo.existsByAnameAndPassword(aname, password)) {
 			Alien obj = repo.findByAnameAndPassword(aname, password);
 			userLogedInID = obj.getAid();
-		            listfiles =obj.getFiles();
-		    //  for (FileInfo fle:listfiles)
-		     // {
-		    //	  System.out.println(fle.getFilename());
-		    	 
-		    //  }
-		       
-		         savedFiles=filerepo.findFilesByAlien(obj);
-		     
-		      model.addAttribute("file",savedFiles);
-		      
-			
+			listfiles =obj.getFiles();
+
+
+			userFiles=filerepo.findFilesByAlien(obj);
+
+			model.addAttribute("file",userFiles);
+
+
 			return "userhome";
 		} else {
 			return "message";
@@ -114,47 +109,45 @@ public class AlienController {
 	@RequestMapping("/addfilestouser")
 	public String filesToOtherUser(@RequestParam String aname ,@RequestParam int aid,@RequestParam String filename,Model model)
 	{
-		FileInfo fi=filerepo.findByFilename(filename);
-		
-	    //String url= fi.getUrl();
-            //  share=new ShareFiles(userLogedInID,aid,url); 
-		
-		//List<File> files = ...;
-		
-	
-		
-		
-		Alien a=repo.findByAid(aid); 
-	     
-		if(repo.existsByAidAndAname(aid, aname) && filerepo.existsByFilename(filename))
-		{
-	   // a= repo.findByAid(aid);
-		//fi.setAlien(a);
-		
-		//filerepo.save(fi);
-		       File file=new File(fi.getUrl(),fi.getFilename());
-			    try {	
+		List<FileInfo> fi=filerepo.findByFilename(filename);
+		for (FileInfo fileInfo : fi) {
+
+
+
+
+
+			Alien a=repo.findByAid(aid); 
+
+			if(repo.existsByAidAndAname(aid, aname) && filerepo.existsByFilename(filename))
+			{
+
+				File file=new File(fileInfo.getUrl(),fileInfo.getFilename());
+				try {	
 					Files.copy(
-					    (new File(fi.getUrl() + fi.getFilename())).toPath(),file.toPath(),
-					    StandardCopyOption.REPLACE_EXISTING);
+							(new File(fileInfo.getUrl() + fileInfo.getFilename())).toPath(),file.toPath(),
+							StandardCopyOption.REPLACE_EXISTING);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			    FileInfo fo=new FileInfo(file.getName(),file.getPath());
-			    fo.setAlien(a);
-			    filerepo.save(fo);
-			
-		model.addAttribute("msg", "Successfully Shared With Desired User");	
-		
+				FileInfo fo=new FileInfo(file.getName(),file.getPath());
+				int randomNum = ThreadLocalRandom.current().nextInt(0, 5555 + 1);
+				fo.setId( randomNum);
+				fo.setAlien(a);
+				filerepo.save(fo);
+
+				model.addAttribute("msg", "Successfully Shared With Desired User");	
+
+			}
+			else
+			{
+				model.addAttribute("msg","User Or File Name is Not Correct");
+			}	
 		}
-		else
-		{
-			model.addAttribute("msg","User Or File Name is Not Correct");
-		}		
-         return "message1"; 
-		
-		}
+
+		return "message1"; 
+
+	}
 
 
 
@@ -168,19 +161,14 @@ public class AlienController {
 		return "userfiles";
 	}
 
-	// Upload controller Starts
 
-	/*
-	 * @RequestMapping("/") public String upload(Model model) { return "uploadpage";
-	 * }
-	 */
 	@RequestMapping(path="/upload",method=RequestMethod.POST)
 	public String upload(Model model, @RequestParam("files") MultipartFile[] files) {
 		StringBuilder filenames = new StringBuilder();
 
 		Alien  myobj = repo.findByAid(userLogedInID);
-		
-		
+
+
 
 		for (MultipartFile file : files) {
 			Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
@@ -195,7 +183,7 @@ public class AlienController {
 			saveObj.setAlien(myobj);
 			filerepo.save(saveObj);
 
-			
+
 			list.add(saveObj);
 			myobj.setFiles(list);
 
@@ -209,62 +197,27 @@ public class AlienController {
 			}
 
 		}
-		
+
 
 		model.addAttribute("msg", "SuccessFully uploaded Files" + filenames.toString());
-   
-		
-		  userFiles = filerepo.findFilesByAlien(myobj); 
-		
-//userFiles.add(e);
-		 model.addAttribute("file",userFiles);
+
+
+		userFiles = filerepo.findFilesByAlien(myobj); 
+
+
+		model.addAttribute("file",userFiles);
 
 		return "userhome";
 
 	}
 
-	// Download Controller Starts
 
-	/*
-	 * @GetMapping("/files") public String getListFiles(Model model) {
-	 * List<FileInfo> fileInfos = fileStorage.loadFiles().map( path -> { String
-	 * filename = path.getFileName().toString(); String url =
-	 * MvcUriComponentsBuilder.fromMethodName(AlienController.class, "downloadFile",
-	 * path.getFileName().toString()).build().toString(); return new
-	 * FileInfo(filename, url); } ) .collect(Collectors.toList());
-	 * 
-	 * model.addAttribute("files", fileInfos); return "listfiles"; }
-	 * 
-	 */
 
-	/*
-	 * Download Files
-	 */
-
-	/*
-	 * @RequestMapping("/share") public String share(@RequestParam String
-	 * aname,@RequestParam String filename,@RequestParam("files") MultipartFile[]
-	 * files) { if(repo.existsByAname(aname)) {
-	 * 
-	 * 
-	 * } StringBuilder filenames=new StringBuilder(); for(MultipartFile file:files)
-	 * { Path fileNameAndPath=Paths.get(user1Directory,file.getOriginalFilename());
-	 * filenames.append(file.getOriginalFilename()); try {
-	 * Files.write(fileNameAndPath,file.getBytes()); } catch (IOException e) { //
-	 * TODO Auto-generated catch block e.printStackTrace(); }
-	 * 
-	 * }
-	 * 
-	 * 
-	 * }
-	 * 
-	 */
-	
 	@GetMapping("/files")
-     public String DownloadFile(Model model)
-     {
-		
-	List<FileInfo> fileInfos = userFiles.stream().map(
+	public String DownloadFile(Model model)
+	{
+
+		List<FileInfo> fileInfos = userFiles.stream().map(
 				path ->	{
 					String filename="b ";
 					String url="b ";
@@ -272,32 +225,29 @@ public class AlienController {
 					{
 						if(repo.existsByAid(userLogedInID))
 						{
-					     filename = path.getFilename().toString();
-					         url = MvcUriComponentsBuilder.fromMethodName(AlienController.class,
-	                        "downloadFile", path.getFilename().toString()).build().toString();
-					}
+							filename = path.getFilename().toString();
+							url = MvcUriComponentsBuilder.fromMethodName(AlienController.class,
+									"downloadFile", path.getFilename().toString()).build().toString();
+						}
 						else
 						{
 							filename="a ";
-							 url=" a";
+							url=" a";
 						}}
 					return new FileInfo(filename, url); 
 				}
-					
-			)
-			.collect(Collectors.toList());
-		
-	
-	model.addAttribute("file", fileInfos);
-		/*for(FileInfo f:userFiles) {
-		String url = MvcUriComponentsBuilder.fromMethodName(AlienController.class,
-                "downloadFile", f.getFilename().toString()).build().toString();
-	model.addAttribute("file",userFiles);*/
-		
-	return "downloadfile";
 
-	
-     }
+				)
+				.collect(Collectors.toList());
+
+
+		model.addAttribute("file", fileInfos);
+
+
+		return "downloadfile";
+
+
+	}
 	@GetMapping("/files/{filename}")
 	public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
 		Resource file = fileStorage.loadFile(filename);
@@ -305,17 +255,17 @@ public class AlienController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
 	}
-	
-	
-	
-	
-	
-	
-@RequestMapping("/backtohome")
-public String back()
-{
-	return "userhome"; 
-}
+
+
+
+
+
+
+	@RequestMapping("/backtohome")
+	public String back()
+	{
+		return "userhome"; 
+	}
 
 
 }

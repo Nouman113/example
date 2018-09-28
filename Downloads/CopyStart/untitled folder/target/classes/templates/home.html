@@ -5,6 +5,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script>
 $(document).ready(function(){
     $("input").focus(function(){
@@ -16,13 +19,6 @@ $(document).ready(function(){
 });
 </script>
 <style type="text/css">
-body
-{
-	font:15px/1.5 Arial,Helvetica,sans-serif;
-	padding:0;
-	margin:0;
-	background-color:#f4f4f4;
-}
 
 
 .li
@@ -90,102 +86,116 @@ header a:hover
 	font-weight:bold;
 }
 
-.list
-{
-   
-	
 
+
+.form-group
+{
+margin-left:120px;
 }
-.container
-{
-	width:80%;
-	margin:auto;
-	overflow:hidden;
-
-
-}	
-
-
-.main
-{
-background-color: #f2e775;
-
-color: #0a2e71;
-margin-left:650px;
-
-
-width:500px;
-
-margin-top:10px;
-padding-bottom:10px;
-padding-top:10px;
-padding-right:10px;
-padding-left:10px;
-
+.box {
+    width: 500px;
+    margin: 50px 0 ;
+        
 }
-.h2-sign
-{
-padding-left: 175px;
-font-size:40px;
+.box-1 {
+    width: 500px;
+    margin: 30px 0 ;
+        
 }
-h3
-{
 
+.shape1{
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    float: left;
+    margin-right: -50px;
 }
-.h3-name
-{
-padding-left:140px;
-font-size:30px;
+ .shape2 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    margin-top: -30px;
+    float: left;
 }
-.h3-password
-{
-padding-left:145px;
-font-size:30px;
+.shape3 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    margin-top: -30px;
+    float: left;
+    margin-left: -31px;
 }
-.first-input
-{
-width:98.5%;
+.shape4 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    margin-top: -25px;
+    float: left;
+    margin-left: -32px;
 }
-input
-{
-width:98.5%;
-height:35px;
-font-size:25px;
+.shape5 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    float: left;
+    margin-right: -48px;
+    margin-left: -32px;
+    margin-top: -30px;
 }
-.submit1
-{
-width:100%;
-color:red;
+.shape6 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    float: left;
+    margin-right: -20px;
+    margin-top: -35px;
+}
+.shape7 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    float: left;
+    margin-right: -20px;
+    margin-top: -57px;
+}
+.float {
+    position: absolute;
+    z-index: 2;
+}
 
+.form {
+    margin-left: 145px;
+}
+.sign-up
+{
+margin-left:800px;
 
-	
-
-}
-.h2-sign
-{
-padding-left: 175px;
-font-size:40px;
-}
-.h3-login
-{
-padding-left:140px;
-font-size:30px;
-}
-.h3-login1
-{
-padding-left:140px;
-font-size:30px;
+margin-top:50px;
 }
 .h2-login
 {
-padding-left: 175px;
-font-size:40px;
+margin-left:800px;
 }
-
 
 </style>
 </head>
 <body>
+
+
 <header>
 
 <div class="container">
@@ -213,39 +223,88 @@ font-size:40px;
 
 
 
+<h3 class="sign-up">
+Sign Up
+</h3>
 
-<div class="main">
+<div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div class="box">
+                    <div class="shape1"></div>
+                    <div class="shape2"></div>
+                    <div class="shape3"></div>
+                    <div class="shape4"></div>
+                    <div class="shape5"></div>
+                    <div class="shape6"></div>
+                    <div class="shape7"></div>
+                    <div class="float">
 
-<form th:action="@{/addAlien}" >
-<h2 class="h2-sign">Sign Up </h2>
+
+<form th:action="@{/addAlien}" method="post">
+
+<div class="form-group">
 
 
-<h3 class="h3-name">Enter Username</h3><input class="first-input" type="text"  name= aname><br>
 
-
-<h3 class="h3-password">Enter Password</h3><input class="i2 " type="password"  name=password><br>
-
-<input class="submit1"type="submit" value="Submit"><br>
-
+<label class="text-white">Enter Username</label><input class="form-control" type="text"  name= aname required>	
+</div>
+<div class="form-group">
+<label class="text-white">Enter Password</label><input class="form-control"type="password"  name=password required>
+</div>
+<div class="form-group">
+<input class="btn btn-info btn-md" type="submit" value="Submit"><br>
+</div>
 
 
 
 </form>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<h2 class="h2-login"> Log In</h2>	
+
+<div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div class="box-1">
+                    <div class="shape1"></div>
+                    <div class="shape2"></div>
+                    <div class="shape3"></div>
+                    <div class="shape4"></div>
+                    <div class="shape5"></div>
+                    <div class="shape6"></div>
+                    <div class="shape7"></div>
+                    <div class="float">
+
+
 
 <form th:action="@{/login}" method="post">
-<h2 class="h2-login"> Log In</h2>
 
 
-<h3 class="h3-login">Enter Username</h3><input type="text"  name= aname  ><br>
-<h3   class="h3-login1">Enter Password</h3><input type="password"  name=password><br>
-<input class="submit1" type="submit" value="Submit"><br>
 
+<div class="form-group">
+<label class="text-white">Enter Username</label>
+<input type="text"  name= aname  required  class="form-control"  >
+</div>
+<div class="form-group">
+<label   class="text-white">Enter Password</label><input type="password" class="form-control"   name=password required>
+</div>
+<div class="form-group">
+<input class="btn btn-info btn-md" type="submit" value="Submit"><br>
+</div>
 
 </form>
-
 
 </div>
 
+</div>
+</div>
+</div>
+</div>
 
 
 

@@ -1,5 +1,6 @@
 package start;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,10 +14,13 @@ import javax.persistence.Table;
 public class FileInfo {
 	
 	@Id
+	@Column(name = "pk")
 	private int id;
 
+	@Column(name = "name")
 	private String filename;
 
+	@Column(name = "url")
 	private String url;
 
 	@ManyToOne
